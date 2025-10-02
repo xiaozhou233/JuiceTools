@@ -1,0 +1,3 @@
+[submodule "JuiceAgent"]
+	path = JuiceAgent
+	url = https://github.com/xiaozhou233/JuiceAgent

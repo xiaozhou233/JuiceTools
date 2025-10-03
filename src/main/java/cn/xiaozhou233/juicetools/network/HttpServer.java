@@ -92,7 +92,7 @@ public class HttpServer extends NanoHTTPD {
 
                     HashMap info = gson.fromJson(jsonData, HashMap.class);
                     String className = ((String) info.get("class")).replace(".", "/");
-                    int length = ((Number) info.get("length")).intValue();
+                    int length = classBytes.length;
                     if (className == null || className.isEmpty())
                         throw new Exception("Missing 'class' parameter in JSON");
                     if (length == 0)
@@ -100,6 +100,7 @@ public class HttpServer extends NanoHTTPD {
                     if (classBytes.length != length)
                         throw new Exception("Class length mismatch: " + classBytes.length + " != " + length);
                     try {
+                        System.out.printf("Redefining class %s with %d bytes\n", className, length);
                         boolean success = JuiceLoader.getLoaderNative().redefineClass(className, classBytes, length);
                         if (success) {
                             jsonMap.put("code", 0);

@@ -118,6 +118,20 @@ public class HttpServer extends NanoHTTPD {
                         return jsonResponse(jsonMap);
                     }
                 }
+                case "/getclasses": {
+                    // package cn.xiaozhou233.juiceloader;
+                    // public native Class<?>[] getLoadedClasses();
+                    try {
+                        StringBuilder stringBuilder = new StringBuilder();
+                        for (Class<?> loadedClass : JuiceLoader.getLoaderNative().getLoadedClasses()) {
+                            if (loadedClass == null) continue;
+                            stringBuilder.append(loadedClass.getName()).append("\n");
+                        }
+                        return newFixedLengthResponse(stringBuilder.toString());
+                    } catch (Exception e) {
+                        throw new RuntimeException(e);
+                    }
+                }
 
                 default:
                     jsonMap.put("code", -1);
@@ -139,8 +153,4 @@ public class HttpServer extends NanoHTTPD {
         return res;
     }
 
-    public static void main(String[] args) throws IOException {
-        JuiceLoader.init(ClassLoader.getSystemResource("lib").getPath());
-        new HttpServer(8080);
-    }
 }

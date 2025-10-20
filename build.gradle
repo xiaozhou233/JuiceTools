@@ -18,6 +18,8 @@ dependencies {
     implementation 'org.nanohttpd:nanohttpd:2.3.1'
     // https://mvnrepository.com/artifact/com.google.code.gson/gson
     implementation 'com.google.code.gson:gson:2.13.2'
+    // https://mvnrepository.com/artifact/com.intellij/forms_rt
+    implementation("com.intellij:forms_rt:7.0.3")
 
     implementation files('lib/JuiceLoader.jar')
 }

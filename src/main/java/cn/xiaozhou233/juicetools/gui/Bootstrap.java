@@ -42,6 +42,8 @@ public class Bootstrap {
         Title.setVerticalTextPosition(0);
         panel1.add(Title, BorderLayout.NORTH);
         progressBar1 = new JProgressBar();
+        progressBar1.setBorderPainted(true);
+        progressBar1.setEnabled(true);
         progressBar1.setIndeterminate(true);
         progressBar1.setOrientation(0);
         progressBar1.setStringPainted(false);

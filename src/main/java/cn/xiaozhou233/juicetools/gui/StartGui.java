@@ -30,6 +30,8 @@ public class StartGui {
 
     public static void showControlPanel() {
         SwingUtilities.invokeLater(() -> {
+            bootstrap.progressBar1.setIndeterminate(false);
+            bootstrap.progressBar1.setValue(100);
             JFrame controlFrame = new JFrame("JuiceTools Control Panel");
             ControlPanel controlPanel = new ControlPanel();
             controlFrame.setContentPane(controlPanel.panel1);

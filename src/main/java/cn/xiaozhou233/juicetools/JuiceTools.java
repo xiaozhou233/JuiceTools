@@ -48,4 +48,8 @@ public class JuiceTools {
 
         StartGui.showControlPanel();
     }
+
+    public static JuiceLoaderNative getLoaderNative() {
+        return loaderNative;
+    }
 }

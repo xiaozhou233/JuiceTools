@@ -46,6 +46,10 @@
                   </component>
                 </children>
               </grid>
+              <component id="39bf2" class="javax.swing.JTree" binding="tree1" default-binding="true">
+                <constraints border-constraint="Center"/>
+                <properties/>
+              </component>
             </children>
           </grid>
           <grid id="a75e6" binding="redefine_panel" layout-manager="GridBagLayout">

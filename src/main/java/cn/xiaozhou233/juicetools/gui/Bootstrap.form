@@ -25,6 +25,8 @@
       <component id="545f5" class="javax.swing.JProgressBar" binding="progressBar1" default-binding="true">
         <constraints border-constraint="South"/>
         <properties>
+          <borderPainted value="true"/>
+          <enabled value="true"/>
           <indeterminate value="true"/>
           <orientation value="0"/>
           <stringPainted value="false"/>

@@ -32,12 +32,19 @@
           <stringPainted value="false"/>
         </properties>
       </component>
-      <component id="f9a5" class="javax.swing.JTextArea" binding="info">
+      <scrollpane id="eb3a0">
         <constraints border-constraint="Center"/>
-        <properties>
-          <font name="Consolas" size="16"/>
-        </properties>
-      </component>
+        <properties/>
+        <border type="none"/>
+        <children>
+          <component id="f9a5" class="javax.swing.JTextArea" binding="info">
+            <constraints/>
+            <properties>
+              <font name="Consolas" size="16"/>
+            </properties>
+          </component>
+        </children>
+      </scrollpane>
     </children>
   </grid>
 </form>

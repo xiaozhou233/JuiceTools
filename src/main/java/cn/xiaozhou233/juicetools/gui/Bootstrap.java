@@ -48,10 +48,12 @@ public class Bootstrap {
         progressBar1.setOrientation(0);
         progressBar1.setStringPainted(false);
         panel1.add(progressBar1, BorderLayout.SOUTH);
+        final JScrollPane scrollPane1 = new JScrollPane();
+        panel1.add(scrollPane1, BorderLayout.CENTER);
         info = new JTextArea();
         Font infoFont = this.$$$getFont$$$("Consolas", -1, 16, info.getFont());
         if (infoFont != null) info.setFont(infoFont);
-        panel1.add(info, BorderLayout.CENTER);
+        scrollPane1.setViewportView(info);
     }
 
     /**

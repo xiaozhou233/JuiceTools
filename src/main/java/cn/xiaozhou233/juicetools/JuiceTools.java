@@ -4,7 +4,10 @@ import cn.xiaozhou233.juiceloader.JuiceLoaderNative;
 import cn.xiaozhou233.juicetools.gui.StartGui;
 import cn.xiaozhou233.juicetools.network.HttpServer;
 
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 
 public class JuiceTools {
     private static JuiceLoaderNative loaderNative;
@@ -17,15 +20,10 @@ public class JuiceTools {
         System.out.println("Starting GUI...");
         StartGui.start();
         StartGui.showInfo("Init!");
-
-        System.out.println("Loading Library...");
-        StartGui.showInfo("Loading Library...");
-        try {
-            System.load(ClassLoader.getSystemResource("lib/libjuiceloader.dll").getPath());
-        } catch (Exception e) {
-            StartGui.showInfo("Error loading library: " + e.getMessage());
-            throw new RuntimeException(e);
-        }
+        // JuiceLoader has been loaded library
+//        System.out.println("Loading Library...");
+//        StartGui.showInfo("Loading Library...");
+//        loadLibrary();
 
         System.out.println("Starting HTTP Server...");
         StartGui.showInfo("Starting HTTP Server...");
@@ -40,7 +38,8 @@ public class JuiceTools {
 
         StartGui.showInfo("Invoke library init...");
         loaderNative = new JuiceLoaderNative();
-        loaderNative.init();
+        System.out.println("Passed loaderNative.init(); Because JuiceLoader has been init it.");
+        //loaderNative.init();
         StartGui.showInfo("Library init success!");
         StartGui.showInfo("Loaded Classes: " + loaderNative.getLoadedClasses().length);
 
@@ -52,4 +51,28 @@ public class JuiceTools {
     public static JuiceLoaderNative getLoaderNative() {
         return loaderNative;
     }
+
+    private static void loadLibrary() {
+        try (InputStream in = JuiceTools.class.getResourceAsStream("/lib/libjuiceloader.dll")) {
+            if (in == null) throw new RuntimeException("DLL not found in jar");
+
+            File tempDll = File.createTempFile("libjuiceloader", ".dll");
+            System.out.println("[Debug][JuiceTools] Loading native from: " + tempDll.getAbsolutePath());
+            tempDll.deleteOnExit();
+
+            try (FileOutputStream out = new FileOutputStream(tempDll)) {
+                byte[] buffer = new byte[4096];
+                int read;
+                while ((read = in.read(buffer)) != -1) {
+                    out.write(buffer, 0, read);
+                }
+            }
+
+            System.load(tempDll.getAbsolutePath());
+        } catch (IOException e) {
+            StartGui.showInfo("Error loading library: " + e.getMessage());
+            throw new RuntimeException(e);
+        }
+    }
+
 }

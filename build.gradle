@@ -21,7 +21,7 @@ dependencies {
     // https://mvnrepository.com/artifact/com.intellij/forms_rt
     implementation("com.intellij:forms_rt:7.0.3")
 
-    implementation files('lib/JuiceLoader.jar')
+    compileOnly files('lib/JuiceLoader.jar')
 }
 
 test {

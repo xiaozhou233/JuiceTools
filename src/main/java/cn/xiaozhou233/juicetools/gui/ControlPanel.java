@@ -1,6 +1,7 @@
 package cn.xiaozhou233.juicetools.gui;
 
 import cn.xiaozhou233.juicetools.JuiceTools;
+import cn.xiaozhou233.juicetools.tools.Dump;
 
 import javax.swing.*;
 import javax.swing.plaf.FontUIResource;
@@ -11,6 +12,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.InputStream;
 import java.io.ObjectOutputStream;
 import java.util.HashMap;
 import java.util.Locale;
@@ -229,7 +231,7 @@ public class ControlPanel {
         }
 
         tree1.setModel(new DefaultTreeModel(root));
-        tree1.expandRow(0); // 展开根节点
+        tree1.expandRow(0);
 
         tree1.addTreeSelectionListener(e -> {
             DefaultMutableTreeNode node = (DefaultMutableTreeNode) tree1.getLastSelectedPathComponent();
@@ -276,9 +278,11 @@ public class ControlPanel {
                 protected Void doInBackground() throws Exception {
                     java.io.File file = new java.io.File(fileField.getText());
                     byte[] bytes = java.nio.file.Files.readAllBytes(file.toPath());
-                    // Todo: Redefine Class
-                    // JuiceTools.redefine(bytes, classField.getText(), file.length());
-
+                    JuiceTools.getLoaderNative().redefineClass(
+                            classField.getText().replace(".", "/"),
+                            bytes,
+                            bytes.length
+                    );
                     return null;
                 }
 
@@ -298,32 +302,33 @@ public class ControlPanel {
             return;
         }
 
-        try {
-            // Todo: Dump Class
-            HashMap<String, byte[]> data = new HashMap<>();
-            // Example Data
-            data.put("field1", new byte[]{1, 2, 3});
+        new Thread(() -> {
+            try {
+                byte[] data = Dump.dumpClass(className.replace("(default).", ""));
 
-            // Select save location
-            JFileChooser chooser = new JFileChooser();
-            chooser.setDialogTitle("Save Dumped Data");
-            chooser.setSelectedFile(new File(className + ".bin"));
-            int result = chooser.showSaveDialog(panel1);
-            if (result != JFileChooser.APPROVE_OPTION) return;
+                JFileChooser chooser = new JFileChooser();
+                chooser.setDialogTitle("Save Dumped Class");
+                chooser.setCurrentDirectory(new File(System.getProperty("user.dir")));
+                chooser.setSelectedFile(new File(className.replace('.', '_') + ".class"));
+                int result = chooser.showSaveDialog(panel1);
+                if (result != JFileChooser.APPROVE_OPTION) return;
 
-            File file = chooser.getSelectedFile();
+                File file = chooser.getSelectedFile();
+                try (FileOutputStream fos = new FileOutputStream(file)) {
+                    fos.write(data);
+                }
 
-            // Save to file
-            try (FileOutputStream fos = new FileOutputStream(file);
-                 ObjectOutputStream oos = new ObjectOutputStream(fos)) {
-                oos.writeObject(data);
+                SwingUtilities.invokeLater(() ->
+                        outputTextField.setText("Saved to: " + file.getAbsolutePath())
+                );
+
+            } catch (Exception ex) {
+                ex.printStackTrace();
+                SwingUtilities.invokeLater(() ->
+                        outputTextField.setText("Error: " + ex.getMessage())
+                );
             }
-
-            outputTextField.setText("Saved to: " + file.getAbsolutePath());
-
-        } catch (Exception ex) {
-            ex.printStackTrace();
-            outputTextField.setText("Error: " + ex.getMessage());
-        }
+        }).start();
     }
+
 }

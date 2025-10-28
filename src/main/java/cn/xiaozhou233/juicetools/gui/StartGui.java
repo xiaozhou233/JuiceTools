@@ -17,7 +17,7 @@ public class StartGui {
         SwingUtilities.invokeLater(() -> {
             frame = new JFrame("JuiceTools Bootstrap");
             frame.setContentPane(bootstrap.panel1);
-            frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+            frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
             frame.pack();
             frame.setResizable(true);
             frame.setVisible(true);
@@ -35,7 +35,7 @@ public class StartGui {
             JFrame controlFrame = new JFrame("JuiceTools Control Panel");
             ControlPanel controlPanel = new ControlPanel();
             controlFrame.setContentPane(controlPanel.panel1);
-            controlFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+            controlFrame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
             controlFrame.pack();
             controlFrame.setResizable(true);
             controlFrame.setVisible(true);

@@ -7,15 +7,17 @@ import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
+import java.util.Objects;
 
 public class Dump {
     public static byte[] dumpClass(String className) {
         try {
             return readStream(
-                    ClassLoader.getSystemResourceAsStream(className.replace('.', '/') + ".class")
+                    Objects.requireNonNull(ClassLoader.getSystemResourceAsStream(className.replace('.', '/') + ".class"))
             );
         } catch (Exception e) {
-            return ("ERROR: " + Arrays.toString(e.getStackTrace())).getBytes(StandardCharsets.UTF_8);
+            e.printStackTrace();
+            return ("ERROR: " + e.toString()).getBytes(StandardCharsets.UTF_8);
         }
     }
 

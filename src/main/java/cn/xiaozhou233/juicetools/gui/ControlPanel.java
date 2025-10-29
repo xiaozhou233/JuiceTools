@@ -1,6 +1,6 @@
 package cn.xiaozhou233.juicetools.gui;
 
-import cn.xiaozhou233.juicetools.JuiceTools;
+import cn.xiaozhou233.juiceloader.JuiceLoaderNative;
 import cn.xiaozhou233.juicetools.tools.Dump;
 
 import javax.swing.*;
@@ -210,7 +210,7 @@ public class ControlPanel {
 
     // Refresh class tree
     private void refreshTree() {
-        Class<?>[] classes = JuiceTools.getLoaderNative().getLoadedClasses();
+        Class<?>[] classes = JuiceLoaderNative.getLoadedClasses();
 
         DefaultMutableTreeNode root = new DefaultMutableTreeNode("Loaded Classes");
         Map<String, DefaultMutableTreeNode> packageNodes = new HashMap<>();
@@ -278,7 +278,7 @@ public class ControlPanel {
                 protected Void doInBackground() throws Exception {
                     java.io.File file = new java.io.File(fileField.getText());
                     byte[] bytes = java.nio.file.Files.readAllBytes(file.toPath());
-                    JuiceTools.getLoaderNative().redefineClass(
+                    JuiceLoaderNative.redefineClassByName(
                             classField.getText().replace(".", "/"),
                             bytes,
                             bytes.length

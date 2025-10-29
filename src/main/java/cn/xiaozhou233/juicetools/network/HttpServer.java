@@ -1,6 +1,7 @@
 package cn.xiaozhou233.juicetools.network;
 
 import cn.xiaozhou233.juiceloader.JuiceLoader;
+import cn.xiaozhou233.juiceloader.JuiceLoaderNative;
 import cn.xiaozhou233.juicetools.Test;
 import cn.xiaozhou233.juicetools.tools.Dump;
 import cn.xiaozhou233.juicetools.tools.Reflect;
@@ -101,7 +102,7 @@ public class HttpServer extends NanoHTTPD {
                         throw new Exception("Class length mismatch: " + classBytes.length + " != " + length);
                     try {
                         System.out.printf("Redefining class %s with %d bytes\n", className, length);
-                        boolean success = JuiceLoader.getLoaderNative().redefineClass(className, classBytes, length);
+                        boolean success = JuiceLoaderNative.redefineClassByName(className, classBytes, length);
                         if (success) {
                             jsonMap.put("code", 0);
                             jsonMap.put("msg", "Class redefined successfully");
@@ -123,7 +124,7 @@ public class HttpServer extends NanoHTTPD {
                     // public native Class<?>[] getLoadedClasses();
                     try {
                         StringBuilder stringBuilder = new StringBuilder();
-                        for (Class<?> loadedClass : JuiceLoader.getLoaderNative().getLoadedClasses()) {
+                        for (Class<?> loadedClass : JuiceLoaderNative.getLoadedClasses()) {
                             if (loadedClass == null) continue;
                             stringBuilder.append(loadedClass.getName()).append("\n");
                         }

@@ -10,7 +10,6 @@ import java.io.IOException;
 import java.io.InputStream;
 
 public class JuiceTools {
-    private static JuiceLoaderNative loaderNative;
     public static void main(String[] args) {
         System.out.println("JuiceTools is starting...");
         init();
@@ -20,10 +19,6 @@ public class JuiceTools {
         System.out.println("Starting GUI...");
         StartGui.start();
         StartGui.showInfo("Init!");
-        // JuiceLoader has been loaded library
-//        System.out.println("Loading Library...");
-//        StartGui.showInfo("Loading Library...");
-//        loadLibrary();
 
         System.out.println("Starting HTTP Server...");
         StartGui.showInfo("Starting HTTP Server...");
@@ -37,19 +32,13 @@ public class JuiceTools {
         }
 
         StartGui.showInfo("Invoke library init...");
-        loaderNative = new JuiceLoaderNative();
         System.out.println("Passed loaderNative.init(); Because JuiceLoader has been init it.");
-        //loaderNative.init();
         StartGui.showInfo("Library init success!");
-        StartGui.showInfo("Loaded Classes: " + loaderNative.getLoadedClasses().length);
+        StartGui.showInfo("Loaded Classes: " + JuiceLoaderNative.getLoadedClasses().length);
 
         StartGui.showInfo("JuiceTools is ready!");
 
         StartGui.showControlPanel();
-    }
-
-    public static JuiceLoaderNative getLoaderNative() {
-        return loaderNative;
     }
 
     private static void loadLibrary() {

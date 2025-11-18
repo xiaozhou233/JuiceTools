@@ -1,6 +1,6 @@
 package cn.xiaozhou233.juicetools;
 
-import cn.xiaozhou233.juiceloader.JuiceLoaderNative;
+import cn.xiaozhou233.juiceloader.JuiceLoader;
 import cn.xiaozhou233.juicetools.gui.StartGui;
 import cn.xiaozhou233.juicetools.network.HttpServer;
 
@@ -34,7 +34,7 @@ public class JuiceTools {
         StartGui.showInfo("Invoke library init...");
         System.out.println("Passed loaderNative.init(); Because JuiceLoader has been init it.");
         StartGui.showInfo("Library init success!");
-        StartGui.showInfo("Loaded Classes: " + JuiceLoaderNative.getLoadedClasses().length);
+        StartGui.showInfo("Loaded Classes: " + JuiceLoader.getLoadedClasses().length);
 
         StartGui.showInfo("JuiceTools is ready!");
 

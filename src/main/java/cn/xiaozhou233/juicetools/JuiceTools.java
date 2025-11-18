@@ -12,6 +12,9 @@ import java.io.InputStream;
 public class JuiceTools {
     public static void main(String[] args) {
         System.out.println("JuiceTools is starting...");
+        // need load juiceloader native lib when start standalone
+        System.load("D:\\Development\\JuiceAgent\\build\\bin\\libjuiceloader.dll");
+        JuiceLoader.init();
         init();
     }
 
@@ -34,7 +37,11 @@ public class JuiceTools {
         StartGui.showInfo("Invoke library init...");
         System.out.println("Passed loaderNative.init(); Because JuiceLoader has been init it.");
         StartGui.showInfo("Library init success!");
-        StartGui.showInfo("Loaded Classes: " + JuiceLoader.getLoadedClasses().length);
+        if (JuiceLoader.getLoadedClasses() == null) {
+            StartGui.showInfo("Loaded Classes: ERROR");
+        } else {
+            StartGui.showInfo("Loaded Classes: " + JuiceLoader.getLoadedClasses().length);
+        }
 
         StartGui.showInfo("JuiceTools is ready!");
 
